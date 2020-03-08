@@ -1,0 +1,21 @@
+{
+  "name": "node-fsapi",
+  "version": "1.0.0",
+  "description": "Api connector to control Frontier Silicon radoin in the local network",
+  "main": "fsapi.js",
+  "dependencies": {
+    "node-fetch": "^2.6.0",
+    "xml-js": "^1.6.11"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "frontier",
+    "silicon",
+    "fsapi"
+  ],
+  "author": "Daniel Kukula",
+  "license": "ISC"
+}
