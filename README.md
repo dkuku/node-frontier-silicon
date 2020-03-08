@@ -1,4 +1,4 @@
-# node-fsapi
+# node-node-frontier-silicon
 JS implementation of the Frontier Silicon API
 - This project is is a direct port of zhelev/python-fsapi (https://github.com/zhelev/python-fsapi) using  metapensiero/metapensiero.pj (https://github.com/metapensiero/metapensiero.pj)
     

@@ -1,4 +1,4 @@
-const Fsapi = require('./fsapi');
+const Fsapi = require('node-frontier-silicon');
 
 const url = 'http://192.168.1.151:80/device'
 const pin = 1234
