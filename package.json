@@ -1,6 +1,6 @@
 {
   "name": "node-fsapi",
-  "version": "0.1",
+  "version": "0.1.0",
   "description": "Api connector to control Frontier Silicon radoin in the local network",
   "homepage": "https://github.com/dkuku/node-fsapi",
   "main": "fsapi.js",
