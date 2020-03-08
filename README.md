@@ -1,4 +1,4 @@
-# node-node-frontier-silicon
+# node-frontier-silicon
 JS implementation of the Frontier Silicon API
 - This project is is a direct port of zhelev/python-fsapi (https://github.com/zhelev/python-fsapi) using  metapensiero/metapensiero.pj (https://github.com/metapensiero/metapensiero.pj)
     
@@ -12,6 +12,8 @@ Usage
 =====
 
 ```js
+const Fsapi = require('node-frontier-silicon');
+
 const URL = 'http://192.168.1.151:80/device'
 const PIN = 1234
 const TIMEOUT = 1 // in seconds
