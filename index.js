@@ -1,6 +1,8 @@
-const fetch = require('node-fetch');
 const convert = require('xml-js');
-
+const _fetch = require('node-fetch');
+if (!globalThis.fetch) {
+    globalThis.fetch = _fetch;
+}
 /*
 Support for interaction with Frontier Silicon Devices
 For example internet radios from: Medion, Hama, Auna, ...*/
@@ -12,12 +14,12 @@ class Fsapi {
         this.fsapi_device_url = fsapi_device_url;
         this.timeout = timeout;
         this.DEFAULT_TIMEOUT_IN_SECONDS= 1, 
-        this.PLAY_STATES= {
-          "0": "stopped",
-          "1": "unknown",
-          "2": "playing",
-          "3": "paused"
-        }
+            this.PLAY_STATES= {
+                "0": "stopped",
+                "1": "unknown",
+                "2": "playing",
+                "3": "paused"
+            }
     }
     async init(){
         this.webfsapi = await this.get_fsapi_endpoint()
@@ -25,19 +27,17 @@ class Fsapi {
     }
 
     async get_fsapi_endpoint() {
-       try { 
-          var self = this
-          var doc, endpoint;
-          let response = await fetch(this.fsapi_device_url)
-          let str = await response.text()
-          let data = await convert.xml2js(str, {compact: true, spaces: 4});
-          return data.netRemote.webfsapi._text
-          } catch (error) {
+        try { 
+            let response = await fetch(this.fsapi_device_url)
+            let str = await response.text()
+            let data = convert.xml2js(str, {compact: true, spaces: 4});
+            return data.netRemote.webfsapi._text
+        } catch (error) {
             if (error) {
                 return error.message
             }
-         }
-      }
+        }
+    }
     async create_session() {
         let session = await this.call("CREATE_SESSION")
         return session.sessionId._text
@@ -45,11 +45,11 @@ class Fsapi {
         //return doc.sessionId.text;
     }
     create_query_params(params) {
-      var esc = encodeURIComponent;
-      var query = Object.keys(params)
-        .map(k => `${esc(k)}=${esc(params[k])}`)
-        .join('&');
-      return query
+        var esc = encodeURIComponent;
+        var query = Object.keys(params)
+            .map(k => `${esc(k)}=${esc(params[k])}`)
+            .join('&');
+        return query
     }
     async call(path, params = {}) {
         /* Execute a frontier silicon API call. */
@@ -57,16 +57,16 @@ class Fsapi {
         if (this.sid){params.sid = this.sid}
 
         try {
-          var query_params = this.create_query_params(params);
-          let response = await fetch(`${this.webfsapi}/${path}?${query_params}`)
-          let str = await response.text()
-          let data = await convert.xml2js(str, {compact: true, spaces: 4});
-          return data.fsapiResponse
-          } catch (error) {
-          if (error) {
-              return error.message
-          }
-      }
+            var query_params = this.create_query_params(params);
+            let response = await fetch(`${this.webfsapi}/${path}?${query_params}`)
+            let str = await response.text()
+            let data = convert.xml2js(str, {compact: true, spaces: 4});
+            return data.fsapiResponse
+        } catch (error) {
+            if (error) {
+                return error.message
+            }
+        }
     }
     async disconnect() {
         var doc = await this.call("DELETE_SESSION");
@@ -85,7 +85,7 @@ class Fsapi {
     }
     async handle_int(item) {
         var doc = await this.handle_get(item);
-        return await Number.parseInt(doc.value.u8._text);
+        return Number.parseInt(doc.value.u8._text);
     }
     async handle_long(item) {
         var doc = await this.handle_get(item);
@@ -120,7 +120,7 @@ class Fsapi {
     async play_control(value) {
         return await this.handle_set("netRemote.play.control", value);
     }
-   async  play() {
+    async  play() {
         return await this.play_control(1);
     }
     async pause() {
@@ -166,10 +166,10 @@ class Fsapi {
     async get_mode() {
         var int_mode = await this.handle_long("netRemote.sys.mode");
         return this.modes[int_mode]
-        }
+    }
     async set_mode(mode) {
         if (mode >= 0 && mode < this.modes.length)
-        return await this.handle_set("netRemote.sys.mode", mode);
+            return await this.handle_set("netRemote.sys.mode", mode);
     }
     async get_duration() {
         return await this.handle_long("netRemote.play.info.duration");
