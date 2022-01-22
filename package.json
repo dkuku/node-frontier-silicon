@@ -5,7 +5,7 @@
   "homepage": "https://github.com/dkuku/node-frontier-silicon",
   "main": "index.js",
   "dependencies": {
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.1.1",
     "xml-js": "^1.6.11"
   },
   "devDependencies": {},
